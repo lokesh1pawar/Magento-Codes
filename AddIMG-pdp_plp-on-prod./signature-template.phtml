@@ -1,0 +1,22 @@
+Path:- app/design/frontend/Plumtree/everlast/Magento_Catalog/templates/signature-template.phtml
+
+<div class="singnature" >
+
+<?php $_helper = $this->helper(Magento\Catalog\Helper\Output::class); ?>
+<?php $_product = $block->getProduct(); ?>
+<?php echo "five-". $_product->getCustomlayout() ?>
+   
+<?php if ($_product->getCustomlayout()): ?>
+                    <?php //Doogma CustomLayout Label
+                    // if($_product->getCustomlayout()): ?>
+                        <div class="sale-lable sale-ltd customlayout-sign"> 
+                      <img src="<?php  echo $block->getViewFileUrl('images/SignatureLogo.png'); ?>" alt="signatre"> 
+
+                            <?php 
+                            echo $_product->getCustomlayout();
+                             ?>
+                        </div>
+                    <?php endif; ?>
+
+
+</div>
