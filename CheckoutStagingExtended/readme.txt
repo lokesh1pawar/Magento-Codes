@@ -1,4 +1,4 @@
-On Place Order  → 
+On Place Order  → something went wrong with your request. please try again later
 
 Payment method issue found on console 
 Path :- vendor/magento/module-checkout-staging/Plugin/GuestPaymentInformationManagementPlugin.php
