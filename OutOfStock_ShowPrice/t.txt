@@ -1,1 +1,26 @@
 
+For magento 2.3.6 , in this module u can show price when product out of stock and tried Bss module but now worked , this is working module but i disabled it bcoz i solved issue from Design file Here code :- 
+
+
+Issue --> Currency Tag missing from PDP page only showing like this 49.99 but expected $49.99 
+
+
+
+<?php if(!$_product->isSalable() && $productType == 'configurable'): ?>
+  <?php
+  $priceHelper = $this->helper('Magento\Framework\Pricing\Helper\Data');
+  list($finalPrice, $regularPrice) = $productDetails->getChildMinPrice($productId);
+  $specialPrice = $priceHelper->currency($finalPrice, true, false);
+  $oldPrice = $priceHelper->currency($regularPrice, true, false);
+  $fprice = $priceHelper->currency($finalPrice); //Custom = For OutofStock Currency issue
+
+  ?>
+  <div class="price-box price-final_price">
+    <span class="title">As low as:</span>
+    <span class="normal-price">
+        <span class="price-container price-final_price">
+            <!-- <span class="price-wrapper "><span class="price"><?//= $finalPrice?></span></span> -->
+            <span class="price-wrapper "><span class="price"><?= $fprice?></span></span> 
+            <!-- Above line Custom currency-->
+        </span>
+    </span>
