@@ -3,6 +3,7 @@ For magento 2.3.6 , in this module u can show price when product out of stock an
 
 
 Issue --> Currency Tag missing from PDP page only showing like this 49.99 but expected $49.99 
+Path:- app/design/frontend/Plumtree/everlast/Magento_Catalog/templates/product/view/type/price_oos.phtml
 
 
 
