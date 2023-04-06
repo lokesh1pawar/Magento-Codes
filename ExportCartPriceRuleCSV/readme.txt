@@ -1,5 +1,7 @@
 Module :- Plumtree_CouponExport
 
+Menu -> Marketing -> Export Cart Price Rule 
+
 Requirment - need to export Cart price Rule data from salesrule Table in CSV.
 
 You also can export Catalog Price Rule data with this technq. just change variable and aruguments.
