@@ -1,6 +1,8 @@
-module :- Plumtree_carrer 
+Module :- Plumtree_carrer 
 
 In this code i upgrade code to m2.3.6 php 7.4 to m2.4.5 php 8.1 for email send code $transport function .
+
+Attachment will not send in this code thats why i Modify a file AddEmailAttachemnt.php
 
 https://magento.stackexchange.com/questions/350770/magento-2-4-attachment-with-email-script 
 
