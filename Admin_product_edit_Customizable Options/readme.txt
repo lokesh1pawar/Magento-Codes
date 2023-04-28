@@ -6,3 +6,7 @@ See screenshot
 Also for Description field 2.3.5
 
 Plumtree_DoogmaDesc
+Plumtree_DoogmaProduct --> For customizable product --> 
+
+
+https://www.mageworx.com/blog/how-to-add-a-field-to-custom-options-in-magento-2
