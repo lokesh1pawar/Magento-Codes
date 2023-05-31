@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="plumtree" sortOrder="999" translate="label">
+			<label>plumtree</label>
+		</tab>
+		<section id="restrict_product" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+			<label>Restrict Products Settings</label>
+			<tab>plumtree</tab>
+			<resource>Plumtree_RestrictProduct::config_Plumtree_RestrictProduct</resource>
+			<group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General</label>
+                <field id="restrict_customer_group" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="multiselect">
+                    <label> Allowed Customer Groups </label>
+                    <source_model>Plumtree\RestrictProduct\Model\Adminhtml\System\Config\Source\Customer\Group</source_model>
+                </field>
+                <field id="restricted_skus" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>SKU for Restrict</label>
+                    <comment>Enter restricted SKUs separated by commas</comment>
+                </field> 
+            </group>
+
+        </section>
+	</system>
+</config>
