@@ -10,16 +10,27 @@
 			<resource>Plumtree_RestrictProduct::config_Plumtree_RestrictProduct</resource>
 			<group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>General</label>
+                <!-- Show Customer Group  -->
                 <field id="restrict_customer_group" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="multiselect">
                     <label> Allowed Customer Groups </label>
                     <source_model>Plumtree\RestrictProduct\Model\Adminhtml\System\Config\Source\Customer\Group</source_model>
                 </field>
+                <!-- For SKU Input -->
                 <field id="restricted_skus" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>SKU for Restrict</label>
                     <comment>Enter restricted SKUs separated by commas</comment>
                 </field> 
+                <!-- For CMS Input -->
+                <field id="restricted_csm_redirect" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Cms Redirect URL</label>
+                    <comment>Example: 'home' </comment>
+                </field> 
+                <!-- For Custom Message Input -->
+                <field id="restricted_after_msg" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Custom Message</label>
+                    <comment>Custom Message for Restrict Customer</comment>
+                </field> 
             </group>
-
         </section>
 	</system>
 </config>
