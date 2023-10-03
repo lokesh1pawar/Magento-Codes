@@ -1,0 +1,677 @@
+<?php $_product = $block->getProduct();
+$num_of_img = $_product->getDoogmaProductStyle();
+$num_of_img = $num_of_img-1;
+$_get_options = $_product->getOptions();
+?>
+<span class="slect-size">Select Ounce Size</span>
+		<?php
+		
+		foreach ($_get_options as $o) {
+			if ($o->getTitle() == 'Size') {
+				$_title_ = $o->getTitle();
+				$_title_ = (str_replace(' ', '-', strtolower($_title_)));
+				$_title_ = (str_replace('#', '', strtolower($_title_)));
+				echo '<div class="'.$o->getTitle().' child-opi" style="display:block;">';
+				foreach ($o->getValues() as $value) {
+					echo "<span class='custom-opt' title=".$value->getData('option_id')."_".$value->getData('option_type_id').">".$value->getData('title')."</span>";
+				}
+				echo '</div>';
+			}
+		}
+?>
+<div id='size_validation' class="mage-error" style="display: none; color: red;">This is a required field.</div>
+<a href="javascript:void(0);" class="editDesignBtn"id="editDesignBtn">Customize Your Glove</a>
+<div id="doogmaCustomModal" class="custom-modal" style="display:none";>
+	<img src="<?php echo $this->getViewFileUrl('images/close-icn.png'); ?>" class="closing_popup" width="20px"/>
+<div class="modal-content-part">
+	<span class="closing-doogma-popup" style="display:none;">DONE</span>
+	<h2 class="title">Customize Your Gloves</h2>
+	<script type="text/javascript" src="//cdne2im.doogma.com/smartmobile-v2/loader.js"></script>
+</div>
+</div>
+
+<div class="share-doogma-image">
+	<div class="share-popup">
+	<span class="closing_popup">X</span>
+		<div class="share-inner">
+			<div class="share-img">
+				<div class="share-bg">
+					<div class="share-dm-img" style="background-image: url('../media/catalog/product<?php echo $_product->getImage(); ?>');"></div>
+
+				</div>
+
+			</div>
+			<div class="bottom">
+				<h2 class="titl">Share My Glove</h2>
+				<ul class="share-links">
+					<li><a href="javascript:void(0);" class="facebook"><i class="fa fa-facebook-f"></i></a></li>
+					<li><a href="javascript:void(0);" class="twitter"><i class="fa fa-twitter"></i></a></li>
+					<li><a href="javascript:void(0);" class="instagram"><i class="fa fa-instagram"></i></a></li>
+					<li><a href="javascript:void(0);" class="pinterest"><i class="fa fa-pinterest-p"></i></a></li>
+				</ul>
+				<a href="javascript:void(0);" class="copy-link">Copy link</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+require(['jquery', 'jquery/ui', 'slick'], function($){
+
+	jQuery("body").on('DOMSubtreeModified', ".input-text.product-custom-option.savedimagelink", function() {
+		var doogma_imageUrl = jQuery('.input-text.product-custom-option.savedimagelink').val();
+		var doogma_productUrl = jQuery('.input-text.product-custom-option.saveddesignlink').val();
+
+		if(doogma_imageUrl){
+			jQuery('div.product-img div.bg-img').css("background-image", "url(" + jQuery('.doogma-image').val() + ")");
+			jQuery('div.bg-thumbimg').css("background-image", "url(" + jQuery('.doogma-thumb').val() + ")");
+
+			jQuery('ul.share-links a.facebook').attr('href','//www.facebook.com/sharer.php?u='+doogma_productUrl+'');
+			jQuery('ul.share-links a.twitter').attr('href','//twitter.com/share?text=CustomizeGlove&url='+doogma_productUrl+'');
+			jQuery('ul.share-links a.instagram').attr('href','//www.instagram.com/?url='+doogma_productUrl+'');
+			jQuery('ul.share-links a.pinterest').attr('href','//pinterest.com/pin/create/button/?url='+doogma_productUrl+'&media='+doogma_imageUrl+'');
+			jQuery('a.copy-link').attr('href','//www.instagram.com/?url='+doogma_productUrl+'');
+
+		}
+	});
+
+	jQuery(document).ready(function(){
+
+		jQuery('body').addClass('doogma-product');
+
+		jQuery('div.imgThumb div').each(function(i, v){
+			var className = '.'+jQuery(this).attr('class').split(' ').join('.');
+			jQuery(className + ":not(:first)").remove();
+		});
+		jQuery('div.imgThumb div:first').css("display", "block");
+
+		$('ul.thumbimg_slider_pager li').each(function(i, v){
+			var className = '.'+$(this).attr('class').split(' ').join('.');
+			$(className + ":not(:first)").remove();
+		});
+
+	});
+	jQuery("body").on('DOMSubtreeModified', "div.breadcrumbs", function() {
+		if (window.location.href.indexOf("dd-link") > -1) {
+			jQuery("div.Size.child-opi span[title|='1_"+jQuery('select.doogma-size option:selected').val()+"']").trigger('click');
+			return false;
+		}
+	});
+	var modal = document.getElementById("doogmaCustomModal");
+	
+	var span = document.getElementsByClassName("closing")[0];
+jQuery(document).ready(function(){
+	var btn = document.getElementById("editDesignBtn");
+if(btn != null){
+	btn.onclick = function(event) {
+		if(jQuery('.doogma-size').find("option:selected").val()==''){
+			jQuery('div#size_validation').show();
+			setTimeout(function(){
+				jQuery('div.Size.child-opi span').removeAttr("style");
+				jQuery('div#size_validation').hide();
+			}, 6000)
+		return false;
+		}
+		jQuery("div.contentdesc").removeAttr("style");
+		jQuery('body').addClass('doogma-popup');
+		modal.style.display = "block";
+
+			jQuery('div.slider_thumb_img div:first').trigger('click');
+			jQuery("div.doogma-model-main").detach().appendTo("div#doogmaCustomModal");
+
+			var main_img = jQuery('.main-image img:first').attr('src');
+			$('img.doogmaimg').attr('src',main_img);
+			$('ul.thumbimg_slider_pager li:first').trigger('click');
+			window.dispatchEvent(new Event('resize'));
+	}
+}
+});
+jQuery("#doogmaCustomModal").insertBefore(".product.media");
+	$(document).on("click","#product-addtocart-button",function() {
+		var sdlink = $('.product-options-wrapper input.input-text.saveddesignlink.product-custom-option').val();
+		var pdfoutput = $('.product-options-wrapper input.input-text.pdfoutput.product-custom-option').val();
+		var imglink = $('.product-options-wrapper input.input-text.savedimagelink.product-custom-option').val();
+		$('.product-options-wrapper input.input-text.saveddesignlink.product-custom-option').val(sdlink);
+		$('.product-options-wrapper input.input-text.pdfoutput.product-custom-option').val(pdfoutput);
+		$('.product-options-wrapper input.input-text.savedimagelink.product-custom-option').val(imglink);
+	});
+
+	$('input.doogma-saveddesignlink').change(function(){
+		var sdlink = $(this).val();
+		$('.product-options-wrapper input.input-text.saveddesignlink.product-custom-option').val(sdlink);
+	});
+	$('input.doogma-pdfoutput').change(function(){
+		var pdfoutput = $(this).val();
+		$('.product-options-wrapper input.input-text.pdfoutput.product-custom-option').val(pdfoutput);
+	});
+	$('input.doogma-thumb').change(function(){
+			var imglink = $(this).val();
+		$('.product-options-wrapper input.input-text.savedimagelink.product-custom-option').val(imglink);
+	});
+	$('input.doogma-image').change(function(){
+			var fullimgurl = $(this).val();
+		$('.product-options-wrapper input.input-text.savedfullimageurl.product-custom-option').val(fullimgurl);
+	});
+
+	$(document).on("click","a.share-doogma-img-link",function() {
+		jQuery('body').addClass('share-glove-popup');
+		jQuery('div.share-doogma-image').css('display','flex');
+
+		if (window.location.href.indexOf("dd-link") > -1) {
+			var doogma_imageUrl = jQuery('.input-text.product-custom-option.savedimagelink').val();
+			jQuery('div.share-dm-img').css("background-image", "url(" + doogma_imageUrl + ")");
+		}
+	});
+
+			// Doogma Dynamic select jQuery Start 
+ 
+	 $("#doogma-gloveview").change(function(){
+
+		$('div.slider_thumb_img div').removeClass('_active');
+
+		$(".slider_thumb_img .doogmathumb-" + $(this).val()).addClass('_active');
+
+		});
+
+		$(document).on("click","div.slider_thumb_img div",function() {
+
+			$('div.slider_thumb_img div').removeClass('_active');
+			$(this).parent().parent().addClass('_active');
+
+			var class_name = $(this).attr('class');
+			// console.log(class_name);
+
+
+		var dataValue = class_name.replace('doogmathumb-', '');
+		// console.log(dataValue);
+
+		$(".doogma-gloveview").find("option").removeAttr("selected");
+		$(".doogma-gloveview").find("option[data-doogma-value='" + dataValue + "']").attr("selected", true);
+		$(".doogma-gloveview").val(dataValue);
+
+		
+					// Doogma Dynamic select jQuery End 
+
+			jQuery('div.__child-opi').html('');
+			var color_list = jQuery('div.'+class_name+'.__child-opi_color_list').html();
+			jQuery('div.__child-opi').html(color_list);
+			jQuery('div.__child-opi').attr('class', '__child-opi');
+			jQuery('div.__child-opi').removeAttr("style");
+			var str = $(this).attr('class');
+
+			if (str.indexOf("doogmathumb-patch") >= 0)
+				jQuery('div.__child-opi').addClass('few_colors');
+
+			$('div.__child-opi span.custom-opt').each(function(){
+				var needtoselectcolor = $(this).attr('id');
+				var first_clr_part = needtoselectcolor.split('__')[0];
+				var seond_clr_part = needtoselectcolor.split('__')[1];
+				var already_sel_clr = jQuery('select#'+first_clr_part).children("option:selected").val();
+			    if(seond_clr_part==already_sel_clr){
+					jQuery(this).addClass('_active');
+				}
+			});
+
+			var slider_img = $(this).find('img').attr('src');
+			slider_img = slider_img.split('?')[1];
+
+			var slider_img_arg = slider_img.split('_');
+			jQuery('.doogma-view-x').val(slider_img_arg[0]);
+			jQuery('.doogma-view-y').val(slider_img_arg[1]);
+			jQuery('.doogma-view-width').val(slider_img_arg[2]);
+			jQuery('.doogma-view-height').val(slider_img_arg[3]);
+			$(this).addClass('_active');
+
+			return false;
+		});
+
+		$(document).on("click","#click-me",function() {
+			var main_img = jQuery('.main-image img:first').attr('src');
+			$('img.doogmaimg').attr('src',main_img);
+		});
+
+		$(document).on("click","span.closing",function() {
+
+			jQuery('div.slider_thumb_img div div div').removeAttr("style");
+			var sucess_call = 1;
+			jQuery('div.slider_thumb_img div').css('border','');
+			jQuery('select.product-custom-option').each(function() {
+			if(!jQuery(this).val()){
+				sucess_call = 0;
+				var validate_drp = jQuery(this).attr('id');
+				jQuery('div.slider_thumb_img div#'+validate_drp.split('_')[1]+'_ ').css('border','1px solid red');
+				jQuery('div.slider_thumb_img div#'+validate_drp.split('_')[1]+'_ img').trigger('click');
+
+				var topoffset = jQuery('div.slider_thumb_img div._active').offset().top;
+
+				if(topoffset>700){ // 700 - 1000
+					jQuery('div.slider_thumb_img').animate({scrollTop: '+=350px'}, 800);
+					jQuery('div.slider_thumb_img').animate({scrollLeft: '+=350px'}, 800);
+				}
+				if(topoffset<0){ // 200 - 0
+					jQuery('div.slider_thumb_img').animate({scrollTop: '+=-350px'}, 800);
+					jQuery('div.slider_thumb_img').animate({scrollLeft: '+=-350px'}, 800);
+				}
+				return false;
+			}
+			});
+			if(sucess_call==1){
+			doogma.saveDesign({
+			  success: function(response) {
+				jQuery('body').removeClass('doogma-popup');
+				var doogma_imageUrl = jQuery('.input-text.product-custom-option.savedimagelink').val();
+				var doogma_productUrl = jQuery('.input-text.product-custom-option.saveddesignlink').val();
+
+				jQuery('div.bg-img').css("background-image", "url(" + jQuery('.doogma-image').val() + ")");
+				jQuery('div.bg-thumbimg').css("background-image", "url(" + jQuery('.doogma-thumb').val() + ")");
+				jQuery('div.share-dm-img').css("background-image", "url(" + jQuery('.doogma-image').val() + ")");
+
+				jQuery('ul.share-links a.facebook').attr('href','http://www.facebook.com/sharer.php?u='+doogma_productUrl+'');
+				jQuery('ul.share-links a.twitter').attr('href','http://twitter.com/share?text=CustomizeGlove&url='+doogma_productUrl+'');
+				jQuery('ul.share-links a.instagram').attr('href','https://www.instagram.com/?url='+doogma_productUrl+'');
+				jQuery('ul.share-links a.pinterest').attr('href','http://pinterest.com/pin/create/button/?url='+doogma_productUrl+'&media='+doogma_imageUrl+'');
+				jQuery('a.copy-link').attr('href','https://www.instagram.com/?url='+doogma_productUrl+'');
+
+				jQuery(".doogma-gloveview").val("multiview");
+				$('.closing-doogma-popup').trigger('click');
+				jQuery('.doogma-product #doogmaCustomModal').hide();
+			},
+			  error: function(response) {}
+			});
+			}
+
+		});
+
+		$(document).on("click",".closing_popup",function() {
+			jQuery('body').removeClass('doogma-popup');
+			jQuery('div.share-doogma-image').removeAttr('style');
+			jQuery('.doogma-product #doogmaCustomModal').hide();
+			jQuery('body').removeClass('share-glove-popup');
+			
+			jQuery('ul.main-image')[0].slick.refresh();
+			
+		});
+
+		$(document).on("click","div.Size.child-opi span.custom-opt",function() {
+			$('div.Size.child-opi div').removeClass('_active');
+			$(this).parent().parent().parent().addClass('_active');
+
+			$('div.Size.child-opi span.custom-opt').removeClass('_activecolor');
+			$(this).addClass('_activecolor');
+			var id_of_custom_pot = $(this).attr('title');
+			var first_id = id_of_custom_pot.split('_')[0];
+			var last_id = id_of_custom_pot.split('_')[1];
+			//jQuery('div.Size.child-opi span').removeAttr("style");
+			$(this).parent('div.Size.child-opi').find("span.custom-opt").css('border-color','#a3a3a5');
+			$(this).css('border-color','#000000');
+
+				$("select[name='options["+first_id+"]'] option").each(function (index, obj) {
+					if($(this).val()==last_id){
+						$(this).prop('selected',true).trigger('click');
+						return false;
+					}
+				});
+
+			$("input[name='options["+first_id+"]']").each(function (index, obj) {
+				if($(this).val()==last_id){
+					$(this).trigger('click');
+				}
+			});
+		});
+
+		$(document).on("click","div.__child-opi span.custom-opt",function() {
+			$('div.__child-opi div').removeClass('_active');
+			$(this).parent().parent().parent().addClass('_active');
+
+			$('div.__child-opi span.custom-opt').removeClass('_active');
+			$(this).addClass('_active');
+			$('div.__child-opi span.custom-opt').removeClass('_activecolor');
+			$(this).addClass('_activecolor');
+			var id_of_custom_pot = $(this).attr('name');
+			var first_id = id_of_custom_pot.split('_')[0];
+			var last_id = id_of_custom_pot.split('_')[1];
+			//jQuery('div.Size.child-opi span').removeAttr("style");
+			$(this).parent('div.__child-opi').find("span.custom-opt").css('border-color','#a3a3a5');
+			$(this).css('border-color','#000000');
+
+				$("select[name='options["+first_id+"]'] option").each(function (index, obj) {
+					if($(this).val()==last_id){
+						$(this).prop('selected',true).trigger('click');
+						return false;
+					}
+				});
+
+
+			$("input[name='options["+first_id+"]']").each(function (index, obj) {
+				if($(this).val()==last_id){
+					$(this).trigger('click');
+				}
+			});
+		});
+
+
+	//-------------------------- Old Dots Button --------------------------------------
+		
+	// $("ul.thumbimg_slider_pager").find('li').click(function(){
+	// 	var img_srcnext = $(this).attr('position');
+	// 	if(img_srcnext){
+	// 		var slider_img_arg = img_srcnext.split('_');
+	// 		$('.doogma-view-x').val(slider_img_arg[0]);
+	// 		$('.doogma-view-y').val(slider_img_arg[1]);
+	// 		$('.doogma-view-width').val(slider_img_arg[2]);
+	// 		$('.doogma-view-height').val(slider_img_arg[3]);
+
+	// 		$("ul.thumbimg_slider_pager").find('li').removeClass('active');
+	// 		$(this).addClass('active');
+	// 	}
+	// });
+
+//-------------------------- New Dots Button --------------------------------------
+
+	$("ul.thumbimg_slider_pager").find('li').click(function(){
+			// var img_srcnext = $(this).attr('position');
+			
+
+    var index = $(this).index(); // Get the index of the clicked li
+
+    $("ul.thumbimg_slider_pager").find('li').removeClass('active');
+    $(this).addClass('active');
+
+    var correspondingDiv = $('.slider_thumb_img').children().eq(index); // Find the corresponding div
+    $('.slider_thumb_img').find('div').removeClass('_active'); // Remove the _active class from all divs
+    correspondingDiv.addClass('_active').click(); // Add the _active class to the corresponding div
+});
+
+		// 		$("ul.thumbimg_slider_pager").find('li').removeClass('active');
+		// 		$(this).addClass('active');
+		// });
+
+	
+	//-------------------------- Old Next and Prev Button --------------------------------------
+
+
+	// jQuery(document).on("click","span.main-img-prev",function() {
+	// 	if ($("ul.thumbimg_slider_pager li.active").prev().length != 0){
+	// 		$("ul.thumbimg_slider_pager li.active").prev().trigger('click');
+	// 		console.log("prev trigger");
+	// 		console.log($("ul.thumbimg_slider_pager li.active").prev().attr('position'));
+	// 	}
+	// 	else{
+	// 		$("ul.thumbimg_slider_pager li:last").trigger('click');
+	// 		console.log("last trigger");
+	// 		console.log($("ul.thumbimg_slider_pager li:last").attr('position'));
+	// 	}
+    //     return false;
+	// });
+
+	
+
+	// $(document).on("click","span.main-img-next",function() {
+	// 	if ($("ul.thumbimg_slider_pager li.active").next().length != 0){
+	// 		$("ul.thumbimg_slider_pager li.active").next().trigger('click');
+	// 		console.log("next trigger");
+	// 		console.log($("ul.thumbimg_slider_pager li.active").next().attr('position'));
+	// 	}
+	// 	else{
+	// 		$("ul.thumbimg_slider_pager li:first").trigger('click');
+	// 		console.log("first trigger");
+	// 		console.log($("ul.thumbimg_slider_pager li:first").attr('position'));
+	// 	}
+	// 	return false;
+
+	// });
+
+
+ //--------------------------  New Next and Prev Button  --------------------------------------
+
+
+	jQuery(document).on("click","span.main-img-prev",function() {
+
+		var activeDiv = $('.slider_thumb_img').find('div._active');
+		activeDiv.removeClass('_active'); 
+		// console.log(activeDiv.attr('class'));
+
+		var prevDiv = activeDiv.prev(); 
+
+		if (prevDiv.length == 0) {
+			prevDiv = $('.slider_thumb_img').children().last();
+			}
+			prevDiv.addClass('_active').click();
+	});
+
+	
+
+	$(document).on("click","span.main-img-next",function() {
+
+		var activeDiv = $('.slider_thumb_img').find('div._active');
+		activeDiv.removeClass('_active'); 
+		// console.log(activeDiv.attr('class'));
+
+		var nextDiv = activeDiv.next(); 
+
+		if (nextDiv.length == 0) {
+        nextDiv = $('.slider_thumb_img').children().first();
+			}
+			nextDiv.addClass('_active').click();
+	});
+
+});
+</script>
+
+<input type="hidden" class="doogma-view-x" name="doogma-view-x" value="0">
+<input type="hidden" class="doogma-view-y" name="doogma-view-y" value="0">
+<input type="hidden" class="doogma-view-width" name="doogma-view-width" value="800">
+<input type="hidden" class="doogma-view-height" name="doogma-view-height" value="800">
+<input type="hidden" name="product_links" id="doogma-saveddesignlink" class="doogma-saveddesignlink">
+<input type="hidden" name="product_thumb" id="doogma-thumb" class="doogma-thumb">
+<input type="hidden" name="product_image" id="doogma-image" class="doogma-image">
+<input type="hidden" name="pdfoutput" id="doogma-pdfoutput" class="doogma-pdfoutput">
+
+
+<!-- Doogma Dynamic select php Start -->
+
+<?php
+	 $titleArray = array();
+
+	foreach ($_get_options as $o) {
+		if($o->getValues()){
+			if ($o->getTitle() != 'Size') {
+				$_title_ = $o->getTitle();
+				$_title_ = (str_replace(' ', '-', strtolower($_title_)));
+				$_title_ = (str_replace('#', '', strtolower($_title_)));
+				$titleArray[] = $_title_;
+				}}}
+			?>
+
+
+<select id="doogma-gloveview" class="doogma-gloveview" style="display:none;">
+    <?php
+    foreach ($titleArray as $option) {
+     echo '<option data-doogma-value="' . $option . '" value="' . $option . '">' . $option . '</option>';
+    }
+     ?>
+     <option data-doogma-value="multiview" value="multiview">multiview</option>
+</select>
+
+<!-- Doogma Dynamic select php End -->
+
+	<?php
+	$slider_thumb_img = '';
+	$opt_child_value = '';
+	$imgThumb = '';
+	$thumbPagination = '';
+	$dataCount = 1;
+	foreach ($_get_options as $o) {
+		if($o->getValues()){
+			if ($o->getTitle() != 'Size') {
+				$_title_ = $o->getTitle();
+				$_title_ = (str_replace(' ', '-', strtolower($_title_)));
+				$_title_ = (str_replace('#', '', strtolower($_title_)));
+
+				if($o->getData('custom_text')){
+					$img_position = strstr($o->getData('custom_text'), '?');
+					$img_position = str_replace("?","",$img_position);
+					$imgThumb .= "<div style='display:none;' class=".$img_position.">".$img_position."</div>";
+					$thumbPagination .= "<li class='pager_0_0_800_800' position='0_0_800_800' data-count='1'>1</li><li class='pager_0_800_800_800' position='0_800_800_800' data-count='2'>2</li><li class='pager_0_1600_800_800' position='0_1600_800_800' data-count='3'>3</li><li class='pager_0_2400_800_800' position='0_2400_800_800' data-count='4'>4</li><li class='pager_0_3200_800_800' position='0_3200_800_800' data-count='5'>5</li>";
+				}
+
+				$slider_thumb_img .= '<div class="doogmathumb-'.$_title_.'" id="'.$o->getData('option_id')."_".$o->getData('option_type_id').'">';
+					if($o->getData('custom_text')){
+						$slider_thumb_img .= "<img src=".$block->getBaseUrl().$o->getData('custom_text')." alt=".$o->getData('option_id')."_".$o->getData('option_type_id')." />";
+						$slider_thumb_img .= "<span class='part-name'>".$o->getTitle()."</span>";
+					}
+				$slider_thumb_img .= '</div>';
+
+
+				$opt_child_value .= '<div class="doogmathumb-'.$_title_.' __child-opi_color_list" style="display:none;">';
+					foreach ($o->getValues() as $value) {
+						//   $data = $value->getData('description'); 
+						//   print_r($data);
+						  $value->getData('title');
+						
+						// print_r($_datavalue[0]);
+
+							if($value->getData('description')){
+							 $_datavalue = explode("||",$value->getData('description'));
+							//  echo $value->getData('description');
+							// print_r($_datavalue[]);
+							if(isset($_datavalue[1] ) && $_datavalue[1] !="" )
+							{
+								$image = $this->helper('\Magento\Cms\Helper\Wysiwyg\Images')->getBaseUrl().$_datavalue[1];
+								$_colorValue = explode("#",$_datavalue[0]);
+								$_colorTitle = $_colorValue[0];
+	
+								$style = "style='display: block; background-position: center; background-image:url(\"".$image."\");'";
+							}
+							else
+							{
+							$_colorValue = explode("#",$value->getData('description'));
+							$_colorTitle = $_colorValue[0];
+
+								$style = "style=' display: block; background-color:#".$_colorValue[1]."'";
+							}
+							
+						}
+						$opt_child_value .= "<div><span class='custom-opt' ".$style." id=".'select_'.$value->getData('option_id')."__".$value->getData('option_type_id')." title=".$_colorTitle." name=".$value->getData('option_id')."_".$value->getData('option_type_id')."><span class='custom-opt-tlt' >".$_colorTitle."</span></span></div>";
+					}
+				$opt_child_value .= '</div>';
+			}
+		}
+	}  
+	?>
+	<div class="imgThumb"><?= $imgThumb ?></div>
+
+	<div class="contentdesc" style="position: fixed; opacity: 0; z-index: -999999;width: 100%;left: 0;height: 100%;top: 0; display:block;pointer-events: none;">
+	<?php
+	echo "<div class='doogma-model-main'>";
+	// echo "<span class='closing'>DONE</span><div class='doogma-img'><span class='main-img-prev'> <i class='fa fa-angle-left'></i> </span><div class='doogma-inner'><div class='doogmaplugin' data-uid='".$_product->getSku()."'></div></div><span class='main-img-next'> <i class='fa fa-angle-right'></i> </span><ul class='thumbimg_slider_pager'>".$thumbPagination."</ul></div>";
+	echo "<span class='closing'>DONE</span><div class='doogma-img'><span class='main-img-prev'> <i class='fa fa-angle-left'></i> </span><div class='doogma-inner'><div class='doogmaplugin' data-uid='".$_product->getSku()."'></div></div><span class='main-img-next'> <i class='fa fa-angle-right'></i> </span><ul class='thumbimg_slider_pager'>";
+
+	foreach ($titleArray as $count => $title) {
+		$count += 1;
+		echo "<li class='' data-count='$count'>$count</li>";
+	}
+
+	echo "</ul></div>";
+	echo "<div class='slider_thumb_img opt-image'>".$slider_thumb_img."</div>";
+	echo "<div class='opt-child-value'>".$opt_child_value."</div>";
+	echo '<div class="__child-opi " ></div>';
+	echo '</div>';
+	?>
+
+</div>
+<style>
+.imgThumb {position: absolute;    z-index: -99999;    opacity: 0;     word-break: break-all;}
+.doogma-product .doogma-model-main .__child-opi .custom-opt[title="Laser"] .custom-opt-tlt{display:block}
+</style>
+<!-- new layout css -->
+<style type="text/css">
+	@media (min-width: 768px){
+		.doogma-product .doogma-model-main .__child-opi .custom-opt{
+			height: 8vh;
+		    width: 8vh;
+		    border-radius: 50%;
+		    margin: auto;
+		    margin-top: 1.05vh;
+		    box-shadow: 0 1px 3px rgb(0 0 0/20%);
+		}
+		.doogma-product .doogma-model-main .__child-opi .custom-opt .custom-opt-tlt{
+			height: 100%;
+			bottom: 0;
+			align-items: center;
+			justify-content: center;
+		}
+		.doogma-product .doogma-model-main .__child-opi .custom-opt:hover .custom-opt-tlt{
+			display: flex;
+		}
+		/*.doogma-product .doogma-model-main .__child-opi{
+			justify-content: center;
+		}
+		.doogma-product .doogma-model-main .__child-opi > div{
+			max-height: 75px;
+		}*/
+		.doogma-product .doogma-model-main .__child-opi.few_colors{
+			justify-content: center;
+		}
+		.doogma-product .doogma-model-main .__child-opi.few_colors > div{
+			max-height: 80px;
+			padding: 10px 0;
+		}
+		.doogma-product .doogma-model-main .__child-opi.few_colors .custom-opt{
+			height: 75px;
+    		width: 75px;
+    		margin: auto;
+		}
+
+	}
+	@media (max-width: 767px){
+		.doogma-product .doogma-model-main .opt-image.slider_thumb_img{
+			bottom: 130px;
+		}
+		.doogma-product .doogma-model-main .__child-opi .custom-opt .custom-opt-tlt{
+			color: #000;
+			bottom: -15px;
+		}
+		.doogma-product .doogma-model-main .__child-opi{
+			background-color: #fff;
+    		height: 90px;
+		}
+		.doogma-product .doogma-model-main .__child-opi div .custom-opt{
+			height: 65px;
+			width: 65px;
+			box-shadow: 0 1px 3px rgb(0 0 0/20%);
+    		margin: 5px auto;
+    		border-radius: 50%;
+		}
+		.doogma-product .doogma-model-main .__child-opi div{
+			width: 75px;
+		}
+		.product-info-main-wrap .product-info-main .signature{
+			order: -3;
+		}
+		.doogma-product .doogma-model-main .closing{
+			width: 96%;
+    		left: 2%;
+		}
+	}
+	@media (max-width: 480px){
+		.doogma-product .doogma-model-main .__child-opi{
+			background-color: #fff;
+    		height: 80px;
+		}
+		.doogma-product .doogma-model-main .__child-opi div .custom-opt{
+			height: 50px;
+			width: 50px;
+    		margin: 12.5px auto;
+		}
+		.doogma-product .doogma-model-main .__child-opi div{
+			width: 60px;
+		}
+		.doogma-product .doogma-model-main .opt-image.slider_thumb_img{
+			bottom: 120px;
+		}
+		.doogma-product .doogma-model-main .__child-opi .custom-opt .custom-opt-tlt{
+			bottom: -12px;
+		}
+	}
+</style>
