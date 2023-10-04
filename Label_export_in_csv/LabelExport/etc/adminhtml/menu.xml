@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Plumtree_LabelExport::parent" title="Label Export" module="Plumtree_LabelExport" sortOrder="10" parent="Magento_Backend::system" resource="Plumtree_LabelExport::parent"/>
+        <add id="Plumtree_LabelExport::exclude_promo_export" title="Exclude Promo Export" module="Plumtree_LabelExport" sortOrder="10" action="labelexport/excludepromo/index" parent="Plumtree_LabelExport::parent" resource="Plumtree_LabelExport::exclude_promo_export"/>
+        <add id="Plumtree_LabelExport::new_export" title="New Promo Export" module="Plumtree_LabelExport" sortOrder="10" action="labelexport/newproduct/index" parent="Plumtree_LabelExport::parent" resource="Plumtree_LabelExport::new_export"/>
+    </menu>
+</config>
