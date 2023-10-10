@@ -1,0 +1,18 @@
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Magento\Framework\Escaper $escaper */
+/** @var Macademy\Blog\ViewModel\Post $postVm */
+$postVm = $block->getData('post_vm');
+?>
+<div class="blog-post-sidebar">
+    <p><strong><?= __('Other blog posts') ?></strong></p>
+    <ul>
+        <?php foreach ($postVm->getList() as $post): ?>
+            <li>
+                <a href="<?= $block->getUrl('blog/post/detail', ['id' => $post->getData('id')]) ?>">
+                    <?= $escaper->escapeHtml($post->getData('title')) ?>
+                </a>
+            </li>
+        <?php endforeach ?>
+    </ul>
+</div>

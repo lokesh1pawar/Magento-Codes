@@ -1,0 +1,19 @@
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var Magento\Framework\Escaper $escaper */
+/** @var Macademy\Blog\ViewModel\Post $postVm */
+$postVm = $block->getData('post_vm');
+?>
+<div class="blog-post-list">
+    <h1><?= __('Blog posts') ?></h1>
+    <ul>
+        <?php foreach ($postVm->getList() as $post): ?>
+            <li>
+                <a href="<?= $block->getUrl('blog/post/detail', ['id' => $post->getData('id')]) ?>">
+                    <?= $escaper->escapeHtml($post->getData('title')) ?>
+                </a>
+            </li>
+        <?php endforeach ?>
+    </ul>
+    <p><?= __('Post count: %1', $postVm->getCount()) ?></p>
+</div>
