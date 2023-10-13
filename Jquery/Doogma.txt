@@ -255,9 +255,17 @@ jQuery("#doogmaCustomModal").insertBefore(".product.media");
 				return false;
 			}
 			});
+
 			if(sucess_call==1){
-			doogma.saveDesign({
-			  success: function(response) {
+
+				$(".doogma-gloveview").find("option").removeAttr("selected");
+				$(".doogma-gloveview").find("option[data-doogma-value='multiview']").attr("selected", true);
+				jQuery(".doogma-gloveview").val("multiview");
+				
+				doogma.saveDesign({
+			 	 success: function(response) {
+			  	
+				$('.closing-doogma-popup').trigger('click');
 				jQuery('body').removeClass('doogma-popup');
 				var doogma_imageUrl = jQuery('.input-text.product-custom-option.savedimagelink').val();
 				var doogma_productUrl = jQuery('.input-text.product-custom-option.saveddesignlink').val();
@@ -272,8 +280,7 @@ jQuery("#doogmaCustomModal").insertBefore(".product.media");
 				jQuery('ul.share-links a.pinterest').attr('href','http://pinterest.com/pin/create/button/?url='+doogma_productUrl+'&media='+doogma_imageUrl+'');
 				jQuery('a.copy-link').attr('href','https://www.instagram.com/?url='+doogma_productUrl+'');
 
-				jQuery(".doogma-gloveview").val("multiview");
-				$('.closing-doogma-popup').trigger('click');
+				
 				jQuery('.doogma-product #doogmaCustomModal').hide();
 			},
 			  error: function(response) {}
@@ -368,25 +375,36 @@ jQuery("#doogmaCustomModal").insertBefore(".product.media");
 
 //-------------------------- New Dots Button --------------------------------------
 
-	$("ul.thumbimg_slider_pager").find('li').click(function(){
-			// var img_srcnext = $(this).attr('position');
-			
+	$("ul.thumbimg_slider_pager").find('li').click(function(){			
 
-    var index = $(this).index(); // Get the index of the clicked li
+    var index = $(this).index(); 
 
-    $("ul.thumbimg_slider_pager").find('li').removeClass('active');
-    $(this).addClass('active');
+		$("ul.thumbimg_slider_pager").find('li').removeClass('active');
+		$(this).addClass('active');
 
-    var correspondingDiv = $('.slider_thumb_img').children().eq(index); // Find the corresponding div
-    $('.slider_thumb_img').find('div').removeClass('_active'); // Remove the _active class from all divs
-    correspondingDiv.addClass('_active').click(); // Add the _active class to the corresponding div
-});
+	var correspondingDiv = $('.slider_thumb_img').children().eq(index); 
+		$('.slider_thumb_img').find('div').removeClass('_active'); 
+		correspondingDiv.addClass('_active').click(); 
 
-		// 		$("ul.thumbimg_slider_pager").find('li').removeClass('active');
-		// 		$(this).addClass('active');
-		// });
-
+	var topPos = correspondingDiv.position().top;
+	$('.slider_thumb_img').animate({scrollTop: topPos}, 800);
 	
+ });
+
+
+	//  For dots and view select 
+
+	$(document).on("click","div.slider_thumb_img div",function() {
+
+		$('.slider_thumb_img div').removeClass('_active');
+		$(this).addClass('_active');
+		$("ul.thumbimg_slider_pager li").removeClass('active');
+		var index = $(this).index();
+		$("ul.thumbimg_slider_pager li").eq(index).addClass('active');
+	});
+
+
+
 	//-------------------------- Old Next and Prev Button --------------------------------------
 
 
@@ -429,7 +447,6 @@ jQuery("#doogmaCustomModal").insertBefore(".product.media");
 
 		var activeDiv = $('.slider_thumb_img').find('div._active');
 		activeDiv.removeClass('_active'); 
-		// console.log(activeDiv.attr('class'));
 
 		var prevDiv = activeDiv.prev(); 
 
@@ -437,15 +454,19 @@ jQuery("#doogmaCustomModal").insertBefore(".product.media");
 			prevDiv = $('.slider_thumb_img').children().last();
 			}
 			prevDiv.addClass('_active').click();
+
+		// Calculate the top position of the previous div relative to its parent
+   		 var topPos = prevDiv.position().top;
+
+   	 	// Animate the scroll position of slider_thumb_img
+    	$('.slider_thumb_img').animate({scrollTop: topPos}, 800);
 	});
 
 	
-
 	$(document).on("click","span.main-img-next",function() {
 
 		var activeDiv = $('.slider_thumb_img').find('div._active');
 		activeDiv.removeClass('_active'); 
-		// console.log(activeDiv.attr('class'));
 
 		var nextDiv = activeDiv.next(); 
 
@@ -453,7 +474,15 @@ jQuery("#doogmaCustomModal").insertBefore(".product.media");
         nextDiv = $('.slider_thumb_img').children().first();
 			}
 			nextDiv.addClass('_active').click();
+
+	   // Calculate the top position of the next div relative to its parent
+	 	 var topPos = nextDiv.position().top;
+
+		// Animate the scroll position of slider_thumb_img
+		$('.slider_thumb_img').animate({scrollTop: topPos}, 800);
 	});
+
+
 
 });
 </script>
