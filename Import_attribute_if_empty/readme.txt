@@ -1,4 +1,4 @@
-In this cron job we are fetching product attribute and check if product attribute is empty then import size and color attribute
+In this cron job we are check every day, fetching product attribute and check if product attribute is empty then import size and color attribute
 
  SQL Query for fetch product that assigned with specific attribute 
 
