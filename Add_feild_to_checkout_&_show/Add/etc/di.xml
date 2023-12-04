@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="OrderDetailsLoggerHandler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/order_details.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="OrderDetailsLogger" type="Monolog\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">OrderDetailsLogger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="customLogger" xsi:type="object">OrderDetailsLoggerHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Lokesh\Add\Observers\OrderDetailObserver">
+        <arguments>
+            <argument name="logger" xsi:type="object">OrderDetailsLogger</argument>
+            <argument name="orderAttributeEngine" xsi:type="object">orderDetailsEngine</argument>
+        </arguments>
+    </type>
+    <type name="Lokesh\Add\Observers\SaveAddressAttributeObserver">
+        <arguments>
+            <argument name="logger" xsi:type="object">OrderDetailsLogger</argument>
+        </arguments>
+    </type>
+    <type name="Lokesh\Add\Plugins\ShippingAddressManagementPlugin">
+        <arguments>
+            <argument name="logger" xsi:type="object">OrderDetailsLogger</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Quote\Model\ShippingAddressManagement">
+        <plugin disabled="false" name="lokesh_Plugin_ShippingAddressManagement" sortOrder="10" type="Lokesh\Add\Plugins\ShippingAddressManagementPlugin"/>
+    </type>
+    <type name="Magento\Customer\Block\Address\Renderer\DefaultRenderer">
+        <plugin name="add_custom_field_to_address" type="Lokesh\Add\Plugins\AddressRendererPlugin" sortOrder="20"/>
+    </type>
+</config>
