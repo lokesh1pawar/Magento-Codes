@@ -62,7 +62,15 @@
             ->setValue('1');
         $newRule->getActions()->addCondition($condition2);
 
-  
+    // Third condition
+        $excludedCategories = [305, 10]; // The categories to exclude
+        $condition3 = $this->ruleProductConditionFactory->create()
+            ->setType('Magento\SalesRule\Model\Rule\Condition\Product')
+            ->setData('attribute', 'category_ids')
+            ->setData('operator', '!()')
+            ->setValue(implode(',', $excludedCategories));
+        $newRule->getActions()->addCondition($condition3);
+
         try {
             $ruleCreate = $newRule->save();
 
