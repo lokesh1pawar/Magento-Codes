@@ -67,6 +67,7 @@
         $condition3 = $this->ruleProductConditionFactory->create()
             ->setType('Magento\SalesRule\Model\Rule\Condition\Product')
             ->setData('attribute', 'category_ids')
+            ->setData('attribute_scope', 'parent')
             ->setData('operator', '!()')
             ->setValue(implode(',', $excludedCategories));
         $newRule->getActions()->addCondition($condition3);
