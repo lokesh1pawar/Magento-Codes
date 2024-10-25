@@ -42,7 +42,7 @@ if (($inputHandle = fopen($inputCsvFile, 'r')) !== false) {
 
         if (!empty($shipsFrom)) {
             if (!empty($additionalAttributes)) {
-                $additionalAttributes .= '|';
+                $additionalAttributes .= ',';
             }
             $additionalAttributes .= 'ships_from=' . $shipsFrom;
         }
@@ -62,3 +62,4 @@ if (($inputHandle = fopen($inputCsvFile, 'r')) !== false) {
 } else {
     echo "Error opening the input CSV file.";
 }
+
